@@ -1,44 +1,37 @@
 // tipado estatico : chequeo de los tipos de datos se hace en
 // tiempo de compilacion
 fn main() {
-    // Integer
-    let entero: i8 = 23;
-    let entero: u8 = 49;
-    let entero2: i8 = -4;
+    let num = { 4 };
+    show_greeting(select_number(num));
 
-    // interger literals
-    let decimal = 90_222;
-    let hex = 0xff;
-    let octal = 0o77;
-    let binary = 0b1111_0000;
+    greet("x".to_string());
+    greet2("x");
 
-    // floats point
-    let f1 = 5.0;
-    let f2: f32 = 12.432;
+    // cuando se pasa por referencia no se crea un objeto nuevo
+    let r = pass_numb_by_ref(&2);
+    show_greeting(r);
+}
+// la convension es crear los nombres usando snake_case
 
-    // boolean
-    let v = true;
-    let f = false;
+fn show_greeting(x: i32) {
+    println!("H {}", x)
+}
 
-    // character
-    let ch = 'a'; // emoji
+fn select_number(x: i32) -> i32 {
+    // se puede omitir el return
+    return x;
+}
 
-    // compound types
+// uso  greet("x".to_string())
+fn greet(x: String) {
+    println!("H {}", x)
+}
 
-    // tuplas
-    let mitupla = ('h', 23, -3, 0.3333);
-    let tu2: (char, i64, u32) = ('h', 34, 1);
-    let (x, y, z) = tu2;
+// uso  greet("x".to_string())
+fn greet2(x: &str) {
+    println!("H {}", x)
+}
 
-    // array tamanno fijo
-    let arreglo = [1, 2, 3, 4, 5];
-
-    // strings existen dos tipo
-    // string slide
-    // es estatico porq es almacenado en el binario finalmente generado
-    let nombre: &'static str = "cuba"; // mas primitivo
-
-    // se aloja en la memoria heap
-    let appellido: String = "jiji".to_string();
-    let appl = String::new();
+fn pass_numb_by_ref(nro: &i32) -> i32 {
+    *nro + 4
 }
