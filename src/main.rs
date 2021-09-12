@@ -1,37 +1,49 @@
-// tipado estatico : chequeo de los tipos de datos se hace en
-// tiempo de compilacion
+// struct
+
+struct User {
+    name: String,
+    email: String,
+    age: i32,
+    status: bool,
+}
+
+impl User {
+    fn age(&self) -> i32 {
+        return self.age;
+    }
+    fn email(&self) -> String {
+        return self.email.to_string();
+    }
+}
 fn main() {
-    let num = { 4 };
-    show_greeting(select_number(num));
+    let mut user = User {
+        name: "k".to_string(),
+        email: String::from("k@mail.com"),
+        age: 30,
+        status: true,
+    };
+    user.status = false;
+    println!("User {}", user.name);
+    let user2 = new_user(String::from("jo"), String::from("jo@mail.com"));
+    println!("User2 {}", user2.age);
 
-    greet("x".to_string());
-    greet2("x");
+    let user1 = User {
+        name: "kas".to_string(),
+        email: "as@mai.com".to_string(),
+        ..user
+    };
+    println!("User {}", user1.name);
 
-    // cuando se pasa por referencia no se crea un objeto nuevo
-    let r = pass_numb_by_ref(&2);
-    show_greeting(r);
-}
-// la convension es crear los nombres usando snake_case
-
-fn show_greeting(x: i32) {
-    println!("H {}", x)
-}
-
-fn select_number(x: i32) -> i32 {
-    // se puede omitir el return
-    return x;
-}
-
-// uso  greet("x".to_string())
-fn greet(x: String) {
-    println!("H {}", x)
+    // tuples struct
+    struct Point(i32, i32, i32);
+    let p = Point(23, 3, 4);
 }
 
-// uso  greet("x".to_string())
-fn greet2(x: &str) {
-    println!("H {}", x)
-}
-
-fn pass_numb_by_ref(nro: &i32) -> i32 {
-    *nro + 4
+fn new_user(name: String, email: String) -> User {
+    return User {
+        name,
+        email,
+        age: 30,
+        status: true,
+    };
 }
