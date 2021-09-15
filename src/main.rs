@@ -1,32 +1,15 @@
 #[allow(dead_code)] // esto es para q no alert por codigo no usado
 
-// enum OPtion
+// generics
 fn main() {
-    let name: Option<String> = Some("Kali".to_string());
-
-    match name {
-        None => println!("Name is none"),
-        Some(name) => println!("{}", name),
-    };
-
-    let new_user = User {
-        name: "as".to_string(),
-        age: Some(32),
-    };
-
-    let age = new_user.get_age();
-    match age {
-        Some(age) => println!("{}", age),
-        _ => (),
-    }
+    let pt1 = Point { x: 0, y: 12 };
+    let pt2 = Point { x: 0, y: 12 };
+    calc_area(pt1, pt2)
 }
 
-struct User {
-    name: String,
-    age: Option<i32>,
+struct Point<T> {
+    x: T,
+    y: T,
 }
-impl User {
-    fn get_age(&self) -> Option<i32> {
-        return self.age;
-    }
-}
+
+fn calc_area<T>(pt1: Point<T>, pt2: Point<T>) {}
