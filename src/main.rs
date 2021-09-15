@@ -1,44 +1,32 @@
-// enums
+#[allow(dead_code)] // esto es para q no alert por codigo no usado
+
+// enum OPtion
+fn main() {
+    let name: Option<String> = Some("Kali".to_string());
+
+    match name {
+        None => println!("Name is none"),
+        Some(name) => println!("{}", name),
+    };
+
+    let new_user = User {
+        name: "as".to_string(),
+        age: Some(32),
+    };
+
+    let age = new_user.get_age();
+    match age {
+        Some(age) => println!("{}", age),
+        _ => (),
+    }
+}
 
 struct User {
     name: String,
-    email: String,
-    age: i32,
-    status: bool,
-    user_role: UserRole,
-    website: Website,
+    age: Option<i32>,
 }
-
-enum UserRole {
-    BASIC,
-    ADMIN,
-}
-
-enum Website {
-    URL(String),
-    INSTAGRAM(String),
-    LINKEDIN(String),
-    FACEBOOK(String),
-}
-
-fn main() {
-    let mut user = User {
-        name: "k".to_string(),
-        email: String::from("k@mail.com"),
-        age: 30,
-        status: true,
-        user_role: UserRole::BASIC,
-        website: Website::INSTAGRAM("Instagram".to_string()),
-    };
-    user.status = false;
-    println!("User {}", user.name);
-
-    let access = hasAccess(user.user_role);
-}
-
-fn hasAccess(user_role: UserRole) -> bool {
-    match user_role {
-        UserRole::ADMIN => true,
-        UserRole::BASIC => false,
+impl User {
+    fn get_age(&self) -> Option<i32> {
+        return self.age;
     }
 }
