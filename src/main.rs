@@ -1,34 +1,21 @@
 #[allow(dead_code)] // esto es para q no alert por codigo no usado
 
 fn main() {
-    let s = [1, 2, 3];
+    // closure: funcion que es definida en linea (inline)
+    // let sum = |nro: i32| -> i32 { nro + 1 };
 
-    for x in s.iter() {
-        println!("{}", x)
-    }
+    // // no inline
+    // // let sum = sum_one;
+    // println!("{}", sum(2));
 
-    let mut c = Counter::new();
-    let i = c.next();
-    match i {
-        Some(count) => println!("{:?}", count),
-        _ => (),
-    }
+    let mut count = 1;
+    let mut inc = move || count += 1;
+
+    let variable = &count; // borrowing, pedir prestada
+    inc();
+    println!("{}", count)
 }
 
-struct Counter {
-    count: i32,
-}
-
-impl Counter {
-    fn new() -> Counter {
-        Counter { count: 0 }
-    }
-}
-
-impl Iterator for Counter {
-    type Item = i32;
-    fn next(&mut self) -> Option<Self::Item> {
-        self.count += 1;
-        Some(self.count)
-    }
+fn sum_one(nro: i32) -> i32 {
+    nro + 1
 }
