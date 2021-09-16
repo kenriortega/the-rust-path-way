@@ -1,75 +1,57 @@
-// Flujos de control
+// Collections
 
 #[allow(dead_code)] // esto es para q no alert por codigo no usado
 
 fn main() {
-    // if
-    let number = 5;
-    if number == 5 {
-        println!("es {}", number);
-    } else {
-        println!("No es 5")
+    // collections pueden tener multiples valores, y apuntan a la memoria heap
+    // por lo q el tamanno no debe ser conocido en tiempo de compilacion
+
+    // vector
+    // let v: Vec<i32> = Vec::new();
+    // let v = vec![1, 2, 3, 4, 5];
+
+    // v.push(2);
+    // v.push(20);
+    // v.push(200);
+    some_vector();
+    // strings
+    // hashmap
+}
+
+fn some_vector() {
+    let mut v = vec![23, 34, 4];
+    v.push(3);
+    let ter = v.get(2);
+    if ter.is_some() {
+        println!("{}", ter.unwrap())
     }
-
-    let result = if number >= 5 { 1000 } else { 12 };
-    println!("{}", result);
-
-    let mut counter = 0;
-    // loops
-    let r = loop {
-        println!("loop");
-        if counter == 10 {
-            break counter;
-        }
-        counter += 1;
-    };
-    println!("{}", r);
-
-    while counter > 0 {
-        println!("{}", counter);
-        counter -= 1;
-    }
-
-    let arreglo = [1, 2, 3, 4];
-    for element in arreglo.iter() {
-        println!("{}", element)
-    }
-    for e in 0..4 {
-        println!("{}", e);
-    }
-
-    let age: Option<i32> = Some(23);
-    match age {
+    match ter {
         Some(value) => println!("{}", value),
-        _ => (),
-    };
-    if let Some(value) = age {
-        println!("{}", value);
-    };
-
-    let mut message_not_checked = Some(100);
-    loop {
-        match message_not_checked {
-            Some(value) => {
-                if value > 0 {
-                    println!("message");
-                } else {
-                    println!("not message");
-                    message_not_checked = None;
-                }
-            }
-            None => {
-                break;
-            }
-        }
+        None => (),
     }
 
-    while let Some(value) = message_not_checked {
-        if value > 0 {
-            println!("message");
-        } else {
-            println!("not message");
-            message_not_checked = None;
+    match v.get(200) {
+        Some(value) => println!("{}", value),
+        None => (),
+    }
+
+    for i in &mut v {
+        *i += 10;
+    }
+    for i in &v {
+        println!("{}", i)
+    }
+
+    enum Message {
+        TEXT(String),
+        ERROR(i32),
+    }
+
+    let message = vec![Message::TEXT("as".to_string()), Message::ERROR(23)];
+    for m in &message {
+        match m {
+            Message::TEXT(text) => println!("{}", text),
+            Message::ERROR(code) => println!("{}", code),
         }
     }
 }
