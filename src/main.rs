@@ -1,21 +1,14 @@
+use std::collections::HashSet;
+
 #[allow(dead_code)] // esto es para q no alert por codigo no usado
 
 fn main() {
-    // closure: funcion que es definida en linea (inline)
-    // let sum = |nro: i32| -> i32 { nro + 1 };
+    let my_struct: MyStruct;
+    let any_var: HashSet<i32>;
+    let mapa: std::collections::HashMap<i32, i32>;
 
-    // // no inline
-    // // let sum = sum_one;
-    // println!("{}", sum(2));
-
-    let mut count = 1;
-    let mut inc = move || count += 1;
-
-    let variable = &count; // borrowing, pedir prestada
-    inc();
-    println!("{}", count)
+    // prelude preludio
+    let opt: Option<i32>;
 }
 
-fn sum_one(nro: i32) -> i32 {
-    nro + 1
-}
+struct MyStruct {}
