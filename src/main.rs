@@ -1,34 +1,36 @@
-// Ownership = propiedad, que es duenno de .
-// Borrowing = pedir prestado.
-// Estos concepto hacen referencia al manejo de memoria
-// en rust no hay GC
-// cada data tiene un owner
 #[allow(dead_code)] // esto es para q no alert por codigo no usado
 
+const VALUE: i32 = 22;
 fn main() {
-    // Stack mem implementada como una pila
-    // rapida para insertar, eliminar y recoger datos
-    // es de tamanno fijo
-    // es liberada cuando se alcanza el fin del scope (ambito)
+    // lifetime = tiempo de vida de la mem
+    // es una forma de asegurar que un pedazo
+    // de memoria es aun valida para una referencia
 
-    let mut age: i32 = 20; // crear var mut
-    increase_age(&mut age); // se pasa por ref la variable y debe ser mutable la ref
-    println!("{}", age);
-
-    // Heap mem
-    // es flexible, costosos los procesos de asignacion y recuperacion
-    // es liberada cuando no tiene mas duennos (owners)
-    let mut name = String::from("Julio");
-    // send_name(name.clone()); // clone es muy costoso
-    send_name(&mut name);
-    println!("{}", name);
+    do_stuff(&VALUE);
+    let a;
+    {
+        // life time B
+        let b = 10;
+        // a = &b; // cambiando el ownership de b -> a
+        a = b; // cambiando el ownership de b -> a
+    } // b es liberada
+      // println!("{}", b); fuera del scope
+    println!("{}", a);
+    // let b = get_ref(&a);
+    let b = get_ref(&a, &VALUE);
+    // let hola = get_owner(String::from("dk"));
+    let name: &'static str = "df";
 }
-
-fn increase_age(age: &mut i32) {
-    // el metodo espera una ref mut
-    *age += 1; // al ser una ref debemos acceder directo a la memoria para desasignarla
+// fn get_owner<'a>(param: String) -> &'a str {
+//     &param // no compila
+// }
+fn do_stuff<'a>(param: &'a i32) -> &'a i32 {
+    param
 }
-
-fn send_name(name: &mut String) {
-    name.push('x')
+fn get_ref<'a, 'b>(param: &'a i32, m: &'a i32) -> &'a i32 {
+    if param > m {
+        param
+    } else {
+        m
+    }
 }
