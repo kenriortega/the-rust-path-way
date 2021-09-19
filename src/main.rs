@@ -1,26 +1,46 @@
-use std::fs::File;
-use std::io::ErrorKind;
 #[allow(dead_code)] // esto es para q no alert por codigo no usado
 
 fn main() {
-    // manejo de errores
-    // Recuperables e.g: abrir archivos donde el path es incorrecto
-    // no hay exceptions
-    // Result<T,E>
-    let file = File::open("./main.rs");
-    match file {
-        Ok(file) => read_file(file),
-        Err(error) => match error.kind() {
-            ErrorKind::NotFound => println!("NotFound"),
-            other_error => println!("Other error"),
-        },
-    }
-
-    let fi2 = File::open("./main.rs").unwrap();
-    let fi2 = File::open("./main.rs").expect("NotFound");
-    // No-Recuperables e.g: tratar de acceder a un arreglo mas alla de su limite
-    // tiene un macro llamado panic!()
-    // panic!("explota")
+    // Test unitarios
+    // assert!(expression)
+    // assert_eq!(a,b)
+    // assert_ne!(a,b)
 }
 
-fn read_file(file: File) {}
+fn divide(a: i32, b: i32) -> i32 {
+    if b == 0 {
+        panic!("No puedes dividir por 0")
+    }
+    a / b
+}
+
+fn sum(a: i32, b: i32) -> i32 {
+    a + b
+}
+
+fn check_alphanumeric_code(code: &str) -> bool {
+    code.chars().all(char::is_alphanumeric)
+}
+
+#[test]
+fn check_alphanumeric_code_test() {
+    let r = check_alphanumeric_code("12356");
+    assert!(r)
+}
+#[test]
+fn check_alphabetic_code_test() {
+    let r = check_alphanumeric_code("L12356");
+    assert!(r)
+}
+
+#[test]
+#[ignore]
+fn sum_test() {
+    assert_eq!(sum(2, 2), 4);
+}
+
+#[test]
+#[should_panic]
+fn divide_test() {
+    divide(12, 0);
+}
